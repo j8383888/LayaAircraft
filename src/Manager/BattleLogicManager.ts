@@ -65,6 +65,7 @@ module manager{
 		private creatMaster():void{
 			this._selfPanel = gameObject.GameObjectFactory.instance.creatGameObject(GAME_OBJ_TYPE.PANEL,
 													PANEL_KIND.PANEL_KIND_0, COMMON_STATUS.ALIVE, TEAM.MASTER);
+			this._selfPanel.registerOperation(OPERATION_TYPE.MASTER);										
 			this._selfPanel.setPos((Laya.stage.width - 88) / 2,Laya.stage.height - 100);
 			this._selfPanel.addBullet(BULLET_KIND.BULLET_KIND_0,0);
 		}
@@ -81,6 +82,7 @@ module manager{
 			var enemyPanel:gameObject.Panel = gameObject.GameObjectFactory.instance.creatGameObject(GAME_OBJ_TYPE.PANEL,
 													randomEnemyPanelType, COMMON_STATUS.ALIVE, TEAM.ENEMY);	
 			enemyPanel.setPos(randomPos,60);
+			enemyPanel.registerOperation(OPERATION_TYPE.ENEMY);
 			enemyPanel.addBullet(randomEnemyBulletType,0);								
 			this.allEnemyPanels.set(enemyPanel.uID,enemyPanel);
 			this.inViewEnemyPanels.set(enemyPanel.uID,enemyPanel);

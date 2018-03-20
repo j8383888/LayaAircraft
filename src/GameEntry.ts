@@ -33,7 +33,8 @@ class GameEntry{
     
     //游戏开始
     private GameStart():void{ 
-        alert("hello world")
+        // alert("Hello World")
+        // gameData.Master.instance.initData(Laya.loader.getRes("res/config/Master.json"));
         UICenter.instance.openUI(UI.Main);
     }
 }

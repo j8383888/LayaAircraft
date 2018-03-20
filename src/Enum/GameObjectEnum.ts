@@ -2,7 +2,8 @@
 const enum GAME_OBJ_TYPE{
     BULLET,
     PANEL,
-    STONE
+    STONE,
+    BURST
 }
 
 /*子弹类型枚举*/

@@ -28,7 +28,7 @@ var operation;
                 this._gameObj.y += 1;
             }
             else {
-                this.destorySelf();
+                this.removeView();
             }
         };
         EnemyPanelOperation.prototype.unregister = function () {
@@ -40,8 +40,15 @@ var operation;
                 this.destorySelf();
             }
         };
+        EnemyPanelOperation.prototype.removeView = function () {
+            Laya.timer.clear(this, this.update);
+            manager.BattleLogicManager.instance.inViewEnemyPanels.remove(this._gameObj.uID);
+            manager.BattleLogicManager.instance.removeEventListener(manager.BattleLogicManager.ENEMY_ON_DESTORY, this, this.onDestroy);
+            gameObject.GameObjectFactory.instance.disposeGameObject(this._gameObj);
+        };
         EnemyPanelOperation.prototype.destorySelf = function () {
             Laya.timer.clear(this, this.update);
+            manager.AnimationManager.instance.play(ANIMATION_TYPE.BURST, this._gameObj.x, this._gameObj.y);
             manager.BattleLogicManager.instance.inViewEnemyPanels.remove(this._gameObj.uID);
             manager.BattleLogicManager.instance.removeEventListener(manager.BattleLogicManager.ENEMY_ON_DESTORY, this, this.onDestroy);
             gameObject.GameObjectFactory.instance.disposeGameObject(this._gameObj);

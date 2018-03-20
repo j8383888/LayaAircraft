@@ -15,19 +15,15 @@ module manager{
 			this.initLayer();
 		}
 		
-		public static get instance():LayerManager
-		{
-			if(this._instance == null)
-			{
+		public static get instance():LayerManager{
+			if(this._instance == null){
 				this._instance = new LayerManager();
 			}
 			return this._instance;
 		}
 		
-		private initLayer():void
-		{
-			for(var i:number = 0; i<this._layerMap.length; i++)
-			{
+		private initLayer():void{
+			for(var i:number = 0; i<this._layerMap.length; i++){
 				var sp:Sprite = this._layerMap.getValueByIndex(i)
 				sp.mouseEnabled = true;
 				sp.mouseThrough = true;
@@ -35,28 +31,22 @@ module manager{
 			}
 		}
 
-		public addToLayer(source:Sprite,layerType:number):void
-		{
-			if(this._layerMap == null)
-			{
+		public addToLayer(source:Sprite,layerType:number):void{
+			if(this._layerMap == null){
 				return;
 			}
 			var layer:Sprite = this._layerMap.getValueByKey(layerType);
-			if(layer != null)
-			{
+			if(layer != null){
 				layer.addChild(source);
 			}
 		}
 
-		public removeFromLayer(source:Sprite,layerType:number):void
-		{
-			if(this._layerMap == null)
-			{
+		public removeFromLayer(source:Sprite,layerType:number):void{
+			if(this._layerMap == null){
 				return;
 			}
 			var layer:Sprite = this._layerMap.getValueByKey(layerType);
-			if(layer != null)
-			{
+			if(layer != null){
 				layer.removeChild(source);				
 			}
 		}

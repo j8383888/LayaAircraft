@@ -1,4 +1,10 @@
 D .
+D ani_burst
+P 077D4ECE ani_burst_1.png
+P 42811675 ani_burst_2.png
+P 5848BBA6 ani_burst_3.png
+P D86694E1 ani_burst_4.png
+P 0337DE16 ani_burst_5.png
 D comp
 P D12221A9 bg.png
 P 9401CC40 blank.png
