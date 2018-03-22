@@ -1,11 +1,13 @@
-/**游戏物体类型 */
-const enum GAME_OBJ_TYPE{
-    BULLET,
-    PANEL,
-    STONE,
-    BURST
+class GameObjectEnum{
+    /*flag类型*/
+    public static readonly TEXTURE_FLAG:string = "texture";
+	public static readonly ANIMATION_FLAG:string = "animation"; 
+    /*typeStr类型*/
+    public static readonly BULLET:string = "bullet";
+    public static readonly PANEL:string = "panel";
+    public static readonly STONE:string = "stone";
+    public static readonly BURST:string = "burst";
 }
-
 /*子弹类型枚举*/
 const enum BULLET_KIND{
     BULLET_KIND_0,
@@ -44,27 +46,5 @@ const enum ENEMY_SINGLE_STATUS{
     FIRE = 100
 }
 
-class GameObjectEnum
-{
-    public enumDic:Dictionary = new Dictionary();
-    private BULLET:string = "bullet";
-    private PANEL:string = "panel";
-    private STONE:string = "stone";
-    private static _instance:GameObjectEnum;
 
-    constructor(){
-        this.enumDic.set(GAME_OBJ_TYPE.BULLET,this.BULLET);
-        this.enumDic.set(GAME_OBJ_TYPE.PANEL,this.PANEL);
-        this.enumDic.set(GAME_OBJ_TYPE.STONE,this.STONE);
-    }
-
-    public static get instance():GameObjectEnum
-    {
-        if(this._instance == null)
-        {
-           this._instance = new GameObjectEnum();
-        }
-        return this._instance;
-    }
-}
 

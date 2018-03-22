@@ -15,7 +15,7 @@ module manager{
         }
 
         public initBulletManager():void{
-            Laya.timer.frameLoop(20,this,this.startCreatBullet);	
+            Laya.timer.frameLoop(10,this,this.startCreatBullet);	
         }
 
         public uninitBulletManager():void{
@@ -35,15 +35,13 @@ module manager{
 
                 this._hostBulletDataDic.keys.forEach(function(key:gameObject.GameObject){
                     var bulletDataAry:Array<Object> = this._hostBulletDataDic.get(key)
-                    if(key == null){
+                    if(key == null || bulletDataAry.length == 0){
                         console.assert(false,"key值错误！");
                     }
                     
                     for(var i:number = 0; i<bulletDataAry.length; i++){
-                        var bullet:gameObject.Bullet = gameObject.GameObjectFactory.instance.creatGameObject(GAME_OBJ_TYPE.BULLET,bulletDataAry[i]["kind"],
-                                                                                bulletDataAry[i]["status"],bulletDataAry[i]["team"]);   
-                        bullet.host = key;
-                        bullet.setPos();
+                        var bullet:gameObject.Bullet = gameObject.GameObjectFactory.instance.creatGameObject(GameObjectEnum.TEXTURE_FLAG,GameObjectEnum.BULLET,bulletDataAry[i]["kind"],
+                                                                                bulletDataAry[i]["status"],bulletDataAry[i]["team"],{host:key,operationID:bulletDataAry[i]["operation"]});
                         this.allBulletDic.set(bullet.uID,bullet);
                     }
             
@@ -59,14 +57,13 @@ module manager{
         }
 
         /*添加子弹*/
-        public addBullet(host:gameObject.GameObject,kindID:number,statusID:number,teamID:number):void{
+        public addBullet(host:gameObject.GameObject,bulletData:Object):void{
             var bulletDataAry:Array<Object> = null; 
             bulletDataAry = this._hostBulletDataDic.get(host);
             if(bulletDataAry == null){
                 bulletDataAry = new Array<gameObject.GameObject>();
-            }            
-            var data:Object = {kind:kindID,status:statusID,team:teamID}; 
-            bulletDataAry.push(data);
+            }     
+            bulletDataAry.push(bulletData);
             this._hostBulletDataDic.set(host, bulletDataAry);
         }
 

@@ -40,15 +40,17 @@ var operation;
                 this.destorySelf();
             }
         };
+        /*从视野中移除*/
         EnemyPanelOperation.prototype.removeView = function () {
             Laya.timer.clear(this, this.update);
             manager.BattleLogicManager.instance.inViewEnemyPanels.remove(this._gameObj.uID);
             manager.BattleLogicManager.instance.removeEventListener(manager.BattleLogicManager.ENEMY_ON_DESTORY, this, this.onDestroy);
             gameObject.GameObjectFactory.instance.disposeGameObject(this._gameObj);
         };
+        /*摧毁*/
         EnemyPanelOperation.prototype.destorySelf = function () {
             Laya.timer.clear(this, this.update);
-            manager.AnimationManager.instance.play(ANIMATION_TYPE.BURST, this._gameObj.x, this._gameObj.y);
+            manager.AnimationManager.instance.aniPlayOnce(GameObjectEnum.BURST, this._gameObj.x, this._gameObj.y);
             manager.BattleLogicManager.instance.inViewEnemyPanels.remove(this._gameObj.uID);
             manager.BattleLogicManager.instance.removeEventListener(manager.BattleLogicManager.ENEMY_ON_DESTORY, this, this.onDestroy);
             gameObject.GameObjectFactory.instance.disposeGameObject(this._gameObj);

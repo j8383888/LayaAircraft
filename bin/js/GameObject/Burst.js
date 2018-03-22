@@ -18,21 +18,8 @@ var gameObject;
         function Burst() {
             return _super.call(this) || this;
         }
-        Burst.prototype.initialize = function () {
-            _super.prototype.initialize.call(this);
-        };
-        Burst.prototype.setPos = function (x, y) {
-            this.pos(x, y);
-        };
-        /*反初始化*/
-        Burst.prototype.uninitialize = function () {
-            _super.prototype.uninitialize.call(this);
-        };
-        Burst.prototype.dispose = function () {
-            _super.prototype.dispose.call(this);
-        };
         return Burst;
-    }(gameObject.GameObjectEx));
+    }(gameObject.GameObjectAnimation));
     gameObject.Burst = Burst;
 })(gameObject || (gameObject = {}));
 //# sourceMappingURL=Burst.js.map

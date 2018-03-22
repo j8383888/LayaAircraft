@@ -12,6 +12,7 @@ var manager;
             this._operationClsDiC.set(1 /* ENEMY */, operation.EnemyPanelOperation);
             this._operationClsDiC.set(2 /* FRIEND */, operation.FiendPanelOperation);
             this._operationClsDiC.set(3 /* BULLET */, operation.BulletOperation);
+            this._operationClsDiC.set(4 /* BULLET_X */, operation.BulletOperationX);
         }
         Object.defineProperty(OperationManager, "instance", {
             get: function () {

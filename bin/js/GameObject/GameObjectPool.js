@@ -24,21 +24,22 @@ var gameObject;
             enumerable: true,
             configurable: true
         });
-        GameObjectPool.prototype.tryGetGameObjInPool = function (typeID, kindID, statusID) {
+        GameObjectPool.prototype.tryGetGameObjInPool = function (flagName, tryStr, kindID, statusID) {
             /*先遍历二级缓存*/
             var gameObj = null;
             var gameObjAry;
-            gameObjAry = this._objectSecondPool.get(typeID + "_" + kindID + "_" + statusID);
+            var key = flagName + "_" + tryStr + "_" + kindID + "_" + statusID;
+            gameObjAry = this._objectSecondPool.get(key);
             if (gameObjAry != null && gameObjAry.length >= 1) {
                 gameObj = gameObjAry.shift();
                 this._curCacheObjNum--;
             }
             else {
-                gameObjAry = this._objectFirstPool.get(typeID + "_" + kindID + "_" + statusID);
+                gameObjAry = this._objectFirstPool.get(key);
                 if (gameObjAry != null && gameObjAry.length >= 1) {
                     //一级缓存有 就扔到二级缓存里
-                    this._objectSecondPool.set(typeID + "_" + kindID + "_" + statusID, gameObjAry);
-                    this._objectFirstPool.remove(typeID + "_" + kindID + "_" + statusID);
+                    this._objectSecondPool.set(key, gameObjAry);
+                    this._objectFirstPool.remove(key);
                     gameObj = gameObjAry.shift();
                     this._curCacheObjNum--;
                 }
@@ -52,7 +53,7 @@ var gameObject;
         };
         GameObjectPool.prototype.disposeGameObject = function (gameObj) {
             gameObj.uninitialize();
-            var key = gameObj.typeID + "_" + gameObj.kindID + "_" + gameObj.statusID;
+            var key = gameObj.flagName + "_" + gameObj.typeID + "_" + gameObj.kindID + "_" + gameObj.statusID;
             if (gameObj == null) {
                 console.assert(false, "gameObj为空！");
             }

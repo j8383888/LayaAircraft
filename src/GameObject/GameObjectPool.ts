@@ -24,22 +24,23 @@ module gameObject{
 			return this._instance;
 		}
 
-		public tryGetGameObjInPool(typeID:number,kindID:number,statusID:number):gameObject.GameObject{
+		public tryGetGameObjInPool(flagName:string,tryStr:string,kindID:number,statusID:number):gameObject.GameObject{
 			/*先遍历二级缓存*/
 			var gameObj:gameObject.GameObject = null;
 			var gameObjAry:Array<gameObject.GameObject>;
-			gameObjAry = this._objectSecondPool.get( typeID + "_" + kindID + "_" + statusID);
+			var key:string = flagName + "_" + tryStr + "_" + kindID + "_" + statusID;
+			gameObjAry = this._objectSecondPool.get(key);
 			if(gameObjAry != null && gameObjAry.length >= 1){
 				gameObj = gameObjAry.shift();
 				this._curCacheObjNum--;
 			}
 			/*遍历一级缓存*/
 			else {
-				gameObjAry = this._objectFirstPool.get(typeID + "_" + kindID + "_" + statusID);
+				gameObjAry = this._objectFirstPool.get(key);
 				if(gameObjAry != null && gameObjAry.length >= 1) {
 					//一级缓存有 就扔到二级缓存里
-					this._objectSecondPool.set(typeID + "_" + kindID + "_" + statusID,gameObjAry);
-					this._objectFirstPool.remove(typeID + "_" + kindID + "_" + statusID);	
+					this._objectSecondPool.set(key,gameObjAry);
+					this._objectFirstPool.remove(key);	
 					gameObj = gameObjAry.shift();
 					this._curCacheObjNum--;
 				}	
@@ -57,7 +58,7 @@ module gameObject{
 
 		public disposeGameObject(gameObj:gameObject.GameObject):void{
 			gameObj.uninitialize();
-			var key:string = gameObj.typeID + "_" + gameObj.kindID + "_" + gameObj.statusID;		
+			var key:string = gameObj.flagName + "_" + gameObj.typeID + "_" + gameObj.kindID + "_" + gameObj.statusID;		
 			if(gameObj == null){
 				console.assert(false,"gameObj为空！")
 			}

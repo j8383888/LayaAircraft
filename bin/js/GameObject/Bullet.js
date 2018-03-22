@@ -17,38 +17,47 @@ var gameObject;
         __extends(Bullet, _super);
         function Bullet() {
             var _this = _super.call(this) || this;
-            _this.OFFSET_X = 5;
-            _this.OFFSET_Y = 40;
+            _this.OFFSET_X = 35;
+            _this.OFFSET_Y = 20;
             /*宿主对象*/
-            _this.host = null;
+            _this._host = null;
             return _this;
         }
         /*初始化*/
         Bullet.prototype.initialize = function () {
             _super.prototype.initialize.call(this);
-            this.registerOperation(3 /* BULLET */);
+            if (this._varsData["operationID"] == null) {
+                console.assert(false, "子弹未注册operationID");
+            }
+            if (this._varsData["host"] == null) {
+                console.assert(false, "子弹宿主对象为空");
+            }
+            this._host = this._varsData["host"];
+            this.setBulletInitPos();
+            this.registerOperation(this._varsData["operationID"]);
         };
-        /*设置位置*/
-        Bullet.prototype.setPos = function () {
-            if (this.host != null) {
+        /*设置子弹的初始位置位置*/
+        Bullet.prototype.setBulletInitPos = function () {
+            if (this._host != null) {
                 if (this._teamID == 0 /* MASTER */) {
-                    this.pos(this.host.x, this.host.y - this.OFFSET_Y);
+                    this.pos(this._host.x, this._host.y - this.OFFSET_Y);
                 }
                 else if (this._teamID == 1 /* ENEMY */) {
-                    this.pos(this.host.x, this.host.y + this.OFFSET_Y);
+                    this.pos(this._host.x, this._host.y + this.OFFSET_Y);
                 }
             }
-            this.rotation = this.host.rotation;
+            this.rotation = this._host.rotation;
         };
         /*反初始化*/
         Bullet.prototype.uninitialize = function () {
             _super.prototype.uninitialize.call(this);
         };
         Bullet.prototype.dispose = function () {
+            this._host = null;
             _super.prototype.dispose.call(this);
         };
         return Bullet;
-    }(gameObject.GameObjectEx));
+    }(gameObject.GameObjectTexture));
     gameObject.Bullet = Bullet;
 })(gameObject || (gameObject = {}));
 //# sourceMappingURL=Bullet.js.map

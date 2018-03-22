@@ -16,6 +16,8 @@ module manager{
 			this._operationClsDiC.set(OPERATION_TYPE.ENEMY,operation.EnemyPanelOperation);
 			this._operationClsDiC.set(OPERATION_TYPE.FRIEND,operation.FiendPanelOperation);
 			this._operationClsDiC.set(OPERATION_TYPE.BULLET,operation.BulletOperation);
+			this._operationClsDiC.set(OPERATION_TYPE.BULLET_X,operation.BulletOperationX);
+		
 		}
 
 		public static get instance():OperationManager{

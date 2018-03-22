@@ -16,11 +16,20 @@ var gameObject;
     var Panel = /** @class */ (function (_super) {
         __extends(Panel, _super);
         function Panel() {
-            return _super.call(this) || this;
+            var _this = _super.call(this) || this;
+            _this.bulletDataAry = null;
+            _this.bulletDataAry = new Array();
+            return _this;
         }
         /*初始化*/
         Panel.prototype.initialize = function () {
             _super.prototype.initialize.call(this);
+            // var len = this.bulletDataAry.length;
+            // if(len != 0){				
+            // 	for(var i:number = 0; i<len; i++){
+            // 		manager.BulletManager.instance.addBullet(this,this.bulletDataAry[i]);
+            // 	}
+            // }
             this.setRotation();
         };
         Panel.prototype.setRotation = function () {
@@ -43,14 +52,30 @@ var gameObject;
             _super.prototype.uninitialize.call(this);
         };
         Panel.prototype.dispose = function () {
+            var len = this.bulletDataAry.length;
+            for (var i = 0; i < len; i++) {
+                this.bulletDataAry[i] = null;
+            }
+            this.bulletDataAry.slice(0, len);
+            this.bulletDataAry = null;
             _super.prototype.dispose.call(this);
         };
         /*添加一种子弹*/
-        Panel.prototype.addBullet = function (bulletKind, bulletState) {
-            manager.BulletManager.instance.addBullet(this, bulletKind, bulletState, this._teamID);
+        Panel.prototype.addBullet = function (bulletKind, bulletState, operationID) {
+            var bulletData = { kind: bulletKind, status: bulletState, team: this._teamID, operation: operationID };
+            var len = this.bulletDataAry.length;
+            if (len != 0) {
+                for (var i = 0; i < len; i++) {
+                    if (this.bulletDataAry[i] == bulletData) {
+                        return;
+                    }
+                }
+            }
+            this.bulletDataAry.push(bulletData);
+            manager.BulletManager.instance.addBullet(this, bulletData);
         };
         return Panel;
-    }(gameObject.GameObjectEx));
+    }(gameObject.GameObjectTexture));
     gameObject.Panel = Panel;
 })(gameObject || (gameObject = {}));
 //# sourceMappingURL=Panel.js.map

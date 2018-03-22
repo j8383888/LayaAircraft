@@ -10,8 +10,7 @@ module operation{
         public register(gameObj:gameObject.GameObject):void {
             super.register(gameObj);
             Laya.timer.frameLoop(1,this,this.update);
-            manager.BattleLogicManager.instance.addEventListener(manager.BattleLogicManager.ENEMY_ON_DESTORY,this,this.onDestroy);
-            
+            manager.BattleLogicManager.instance.addEventListener(manager.BattleLogicManager.ENEMY_ON_DESTORY,this,this.onDestroy);       
         }
 
         private update():void{
@@ -43,7 +42,7 @@ module operation{
         /*摧毁*/
         private destorySelf():void{
             Laya.timer.clear(this,this.update);
-            manager.AnimationManager.instance.play(ANIMATION_TYPE.BURST,this._gameObj.x,this._gameObj.y);
+            manager.AnimationManager.instance.aniPlayOnce(GameObjectEnum.BURST,this._gameObj.x,this._gameObj.y);
             manager.BattleLogicManager.instance.inViewEnemyPanels.remove(this._gameObj.uID);
             manager.BattleLogicManager.instance.removeEventListener(manager.BattleLogicManager.ENEMY_ON_DESTORY,this,this.onDestroy);
             gameObject.GameObjectFactory.instance.disposeGameObject(this._gameObj);      

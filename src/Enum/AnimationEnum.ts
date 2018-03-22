@@ -1,3 +1,0 @@
-enum ANIMATION_TYPE{
-    BURST
-}

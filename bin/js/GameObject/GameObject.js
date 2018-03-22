@@ -25,9 +25,9 @@ var gameObject;
             _this.autoSize = true;
             return _this;
         }
-        GameObject.prototype.setData = function (typeID, kindID, statusID, teamID, uID, varsData) {
-            if (varsData === void 0) { varsData = null; }
-            this._typeID = typeID;
+        GameObject.prototype.setData = function (flagName, typeStr, kindID, statusID, teamID, uID, varsData) {
+            this._flagName = flagName;
+            this._typeStr = typeStr;
             this._kindID = kindID;
             this._statusID = statusID;
             this._teamID = teamID;
@@ -41,7 +41,7 @@ var gameObject;
             console.assert(false, "uninitialize必须被重写");
         };
         GameObject.prototype.dispose = function () {
-            this._typeID = -1;
+            this._typeStr = null;
             this._kindID = -1;
             this._statusID = -1;
             this._teamID = -1;
@@ -65,7 +65,7 @@ var gameObject;
         });
         Object.defineProperty(GameObject.prototype, "typeID", {
             get: function () {
-                return this._typeID;
+                return this._typeStr;
             },
             enumerable: true,
             configurable: true
@@ -81,6 +81,9 @@ var gameObject;
             get: function () {
                 return this._varsData;
             },
+            set: function (value) {
+                this._varsData = value;
+            },
             enumerable: true,
             configurable: true
         });
@@ -95,10 +98,19 @@ var gameObject;
             get: function () {
                 return this._teamID;
             },
+            set: function (value) {
+                this._teamID = value;
+            },
             enumerable: true,
             configurable: true
         });
-        GameObject.ATLAS_FLAG = "gameObject";
+        Object.defineProperty(GameObject.prototype, "flagName", {
+            get: function () {
+                return this._flagName;
+            },
+            enumerable: true,
+            configurable: true
+        });
         return GameObject;
     }(Sprite));
     gameObject.GameObject = GameObject;

@@ -4,9 +4,10 @@
 module gameObject{
 	import Sprite = laya.display.Sprite;
 	export class GameObject extends Sprite{
-		public static ATLAS_FLAG:string = "gameObject";
-		/*gameObejct_typeID_kindID_statusID 对应 GameObjectEnum.ts枚举 对应美术资源*/
-		protected _typeID:number;
+		/*flagName_typeStr 对应图集的名字
+			flagName_typeStr_kindID_statusID 对应 GameObjectEnum.ts枚举 对应美术资源*/
+		protected _flagName:string;
+		protected _typeStr:string;
 		protected _kindID:number;
 		protected _statusID:number;
 		//队伍ID：0为玩家 1为敌人 2为队友
@@ -23,9 +24,10 @@ module gameObject{
 			this.autoSize = true;
 		}
 
-		public setData(typeID:number,kindID:number,statusID:number,teamID:number,uID:number,varsData:Object = null):void
+		public setData(flagName:string,typeStr:string,kindID:number,statusID:number,teamID:number,uID:number,varsData:Object):void
 		{
-			this._typeID = typeID;
+			this._flagName = flagName;
+			this._typeStr = typeStr;
 			this._kindID = kindID;
 			this._statusID = statusID;
 
@@ -44,7 +46,7 @@ module gameObject{
 		}
 
 		public dispose():void{
-			this._typeID = -1;
+			this._typeStr = null;
 			this._kindID = -1;
 			this._statusID = -1;
 			this._teamID = -1;
@@ -61,8 +63,8 @@ module gameObject{
 			return this._kindID;
 		}
 
-		public get typeID():number{
-			return this._typeID;
+		public get typeID():string{
+			return this._typeStr;
 		}
 
 		public get statusID():number{
@@ -79,6 +81,18 @@ module gameObject{
 
 		public get teamID():number{
 			return this._teamID;
+		}
+
+		public get flagName():string{
+			return this._flagName;
+		}
+
+		public set varsData(value:Object){
+			this._varsData = value;
+		}
+
+		public set teamID(value:number){
+			this._teamID = value
 		}
 	}
 }

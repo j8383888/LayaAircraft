@@ -13,7 +13,7 @@ module manager{
 		/*单例*/
 		private static _instance:BattleLogicManager = null;
 		/*玩家飞机*/
-		private _selfPanel:gameObject.Panel;
+		public masterPanel:gameObject.Panel;
 		
 
 		constructor(){
@@ -46,11 +46,11 @@ module manager{
 			this.offAll();
 			this.allEnemyPanels.clear();
 			this.inViewEnemyPanels.clear();
-			this._selfPanel = null;
+			this.masterPanel = null;
 		}
 
 		private destroyMaster():void{
-			gameObject.GameObjectFactory.instance.disposeGameObject(this._selfPanel);	
+			gameObject.GameObjectFactory.instance.disposeGameObject(this.masterPanel);	
 		}
 
 		private destroyEnemys():void{
@@ -63,15 +63,16 @@ module manager{
 		}
 
 		private creatMaster():void{
-			this._selfPanel = gameObject.GameObjectFactory.instance.creatGameObject(GAME_OBJ_TYPE.PANEL,
+			this.masterPanel = gameObject.GameObjectFactory.instance.creatGameObject(GameObjectEnum.TEXTURE_FLAG,GameObjectEnum.PANEL,
 													PANEL_KIND.PANEL_KIND_0, COMMON_STATUS.ALIVE, TEAM.MASTER);
-			this._selfPanel.registerOperation(OPERATION_TYPE.MASTER);										
-			this._selfPanel.setPos((Laya.stage.width - 88) / 2,Laya.stage.height - 100);
-			this._selfPanel.addBullet(BULLET_KIND.BULLET_KIND_0,0);
+			this.masterPanel.registerOperation(OPERATION_TYPE.MASTER);										
+			this.masterPanel.setPos((Laya.stage.width - 88) / 2,Laya.stage.height - 100);
+			this.masterPanel.addBullet(BULLET_KIND.BULLET_KIND_0,0,OPERATION_TYPE.BULLET);
 		}
 
 		private creatEnemys():void{	
-			Laya.timer.frameLoop(50,this,this.creatEnemyAry);			
+			Laya.timer.frameLoop(20,this,this.creatEnemyAry);
+			// this.creatEnemyAry();
 		}
 
 		private creatEnemyAry():void{
@@ -79,11 +80,12 @@ module manager{
 			var randomEnemyPanelType:number = MathUtil.random(1,4);
 			var randomEnemyBulletType:number = MathUtil.random(1,4);
 
-			var enemyPanel:gameObject.Panel = gameObject.GameObjectFactory.instance.creatGameObject(GAME_OBJ_TYPE.PANEL,
+			var enemyPanel:gameObject.Panel = gameObject.GameObjectFactory.instance.creatGameObject(GameObjectEnum.TEXTURE_FLAG,GameObjectEnum.PANEL,
 													randomEnemyPanelType, COMMON_STATUS.ALIVE, TEAM.ENEMY);	
-			enemyPanel.setPos(randomPos,60);
+			enemyPanel.setPos(randomPos,50);
 			enemyPanel.registerOperation(OPERATION_TYPE.ENEMY);
-			enemyPanel.addBullet(randomEnemyBulletType,0);								
+			enemyPanel.addBullet(randomEnemyBulletType,0,OPERATION_TYPE.BULLET_X);	
+			enemyPanel.addBullet(randomEnemyBulletType,0,OPERATION_TYPE.BULLET);							
 			this.allEnemyPanels.set(enemyPanel.uID,enemyPanel);
 			this.inViewEnemyPanels.set(enemyPanel.uID,enemyPanel);
 		}

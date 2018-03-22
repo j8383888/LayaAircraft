@@ -9,7 +9,7 @@ var manager;
             this.allBulletDic = new Dictionary();
         }
         BulletManager.prototype.initBulletManager = function () {
-            Laya.timer.frameLoop(20, this, this.startCreatBullet);
+            Laya.timer.frameLoop(10, this, this.startCreatBullet);
         };
         BulletManager.prototype.uninitBulletManager = function () {
             Laya.timer.clear(this, this.startCreatBullet);
@@ -26,13 +26,11 @@ var manager;
             }
             this._hostBulletDataDic.keys.forEach(function (key) {
                 var bulletDataAry = this._hostBulletDataDic.get(key);
-                if (key == null) {
+                if (key == null || bulletDataAry.length == 0) {
                     console.assert(false, "key值错误！");
                 }
                 for (var i = 0; i < bulletDataAry.length; i++) {
-                    var bullet = gameObject.GameObjectFactory.instance.creatGameObject(0 /* BULLET */, bulletDataAry[i]["kind"], bulletDataAry[i]["status"], bulletDataAry[i]["team"]);
-                    bullet.host = key;
-                    bullet.setPos();
+                    var bullet = gameObject.GameObjectFactory.instance.creatGameObject(GameObjectEnum.TEXTURE_FLAG, GameObjectEnum.BULLET, bulletDataAry[i]["kind"], bulletDataAry[i]["status"], bulletDataAry[i]["team"], { host: key, operationID: bulletDataAry[i]["operation"] });
                     this.allBulletDic.set(bullet.uID, bullet);
                 }
             }, this);
@@ -48,14 +46,13 @@ var manager;
             configurable: true
         });
         /*添加子弹*/
-        BulletManager.prototype.addBullet = function (host, kindID, statusID, teamID) {
+        BulletManager.prototype.addBullet = function (host, bulletData) {
             var bulletDataAry = null;
             bulletDataAry = this._hostBulletDataDic.get(host);
             if (bulletDataAry == null) {
                 bulletDataAry = new Array();
             }
-            var data = { kind: kindID, status: statusID, team: teamID };
-            bulletDataAry.push(data);
+            bulletDataAry.push(bulletData);
             this._hostBulletDataDic.set(host, bulletDataAry);
         };
         /*移出飞机上的所有子弹*/
