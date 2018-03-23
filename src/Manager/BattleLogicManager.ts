@@ -3,9 +3,8 @@
 */
 module manager{
 	import stage = Laya.stage;
-	export class BattleLogicManager extends laya.events.EventDispatcher{
+	export class BattleLogicManager{
 
-		public static ENEMY_ON_DESTORY:string = "enemy_on_destory";
 		/*一关中所有的敌人字典*/
 		public allEnemyPanels:Dictionary;
 		/*在屏幕内的敌人字典*/
@@ -13,11 +12,12 @@ module manager{
 		/*单例*/
 		private static _instance:BattleLogicManager = null;
 		/*玩家飞机*/
-		public masterPanel:gameObject.Panel;
+		public masterPanel:gameObject.MasterPanel;
+
+		private enemyBulletKindAry:Array<number> = [10,12,14,16]
 		
 
 		constructor(){
-			super();
 			this.allEnemyPanels = new Dictionary();
 			this.inViewEnemyPanels = new Dictionary();
 		}
@@ -40,10 +40,9 @@ module manager{
 		}
 
 		private dispose():void{
-			this.destroyMaster();
-			this.destroyEnemys();	
 			manager.BulletManager.instance.uninitBulletManager();
-			this.offAll();
+			this.destroyMaster();
+			this.destroyEnemys();			
 			this.allEnemyPanels.clear();
 			this.inViewEnemyPanels.clear();
 			this.masterPanel = null;
@@ -63,44 +62,33 @@ module manager{
 		}
 
 		private creatMaster():void{
-			this.masterPanel = gameObject.GameObjectFactory.instance.creatGameObject(GameObjectEnum.TEXTURE_FLAG,GameObjectEnum.PANEL,
+			this.masterPanel = gameObject.GameObjectFactory.instance.creatGameObject(GameObjectEnum.TEXTURE_FLAG,GameObjectEnum.MASTER_PANEL,
 													PANEL_KIND.PANEL_KIND_0, COMMON_STATUS.ALIVE, TEAM.MASTER);
 			this.masterPanel.registerOperation(OPERATION_TYPE.MASTER);										
 			this.masterPanel.setPos((Laya.stage.width - 88) / 2,Laya.stage.height - 100);
-			this.masterPanel.addBullet(BULLET_KIND.BULLET_KIND_0,0,OPERATION_TYPE.BULLET);
+			this.masterPanel.addBullet(BULLET_KIND.BULLET_KIND_0,0,OPERATION_TYPE.BULLET,10);
 		}
 
 		private creatEnemys():void{	
-			Laya.timer.frameLoop(20,this,this.creatEnemyAry);
-			// this.creatEnemyAry();
+			// Laya.timer.frameLoop(20,this,this.creatEnemyAry);
+			this.creatEnemyAry();
 		}
 
 		private creatEnemyAry():void{
-			var randomPos:number = MathUtil.random(0,400);	
-			var randomEnemyPanelType:number = MathUtil.random(1,4);
-			var randomEnemyBulletType:number = MathUtil.random(1,4);
+			var randomPos:number = MathUtil.randomToInt(0,400);	
+			var randomEnemyPanelType:number = MathUtil.randomToInt(1,4);
+			var randomEnemyBulletKind:number = MathUtil.randomToInt(0,3);
 
-			var enemyPanel:gameObject.Panel = gameObject.GameObjectFactory.instance.creatGameObject(GameObjectEnum.TEXTURE_FLAG,GameObjectEnum.PANEL,
+			var enemyPanel:gameObject.EnemyPanel = gameObject.GameObjectFactory.instance.creatGameObject(GameObjectEnum.TEXTURE_FLAG,GameObjectEnum.ENEMY_PANEL,
 													randomEnemyPanelType, COMMON_STATUS.ALIVE, TEAM.ENEMY);	
 			enemyPanel.setPos(randomPos,50);
 			enemyPanel.registerOperation(OPERATION_TYPE.ENEMY);
-			enemyPanel.addBullet(randomEnemyBulletType,0,OPERATION_TYPE.BULLET_X);	
-			enemyPanel.addBullet(randomEnemyBulletType,0,OPERATION_TYPE.BULLET);							
+			enemyPanel.addBullet(this.enemyBulletKindAry[randomEnemyBulletKind],0,OPERATION_TYPE.BULLET_CIRCLE,1,3);
+			// enemyPanel.addBullet(randomEnemyBulletType,0,OPERATION_TYPE.BULLET);						
 			this.allEnemyPanels.set(enemyPanel.uID,enemyPanel);
 			this.inViewEnemyPanels.set(enemyPanel.uID,enemyPanel);
 		}
 
-		public dispatchEvent(event:string,data:any):void{
-			this.event(event,data);
-		}
-
-		public addEventListener(event:string,caller: any, listener: Function, args?: Array<any>):void{
-			this.on(event, caller, listener, args);
-		}
-
-		public removeEventListener(event:string,caller: any, listener: Function, onceOnly?: boolean):void{
-			this.off(event, caller, listener, onceOnly);
-		}
 	}
 	
 }

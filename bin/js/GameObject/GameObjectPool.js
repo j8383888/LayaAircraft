@@ -52,6 +52,8 @@ var gameObject;
             return gameObj;
         };
         GameObjectPool.prototype.disposeGameObject = function (gameObj) {
+            /*刚存进 不能马上被释放*/
+            gameObj.canDispose = false;
             gameObj.uninitialize();
             var key = gameObj.flagName + "_" + gameObj.typeID + "_" + gameObj.kindID + "_" + gameObj.statusID;
             if (gameObj == null) {
@@ -104,11 +106,13 @@ var gameObject;
                     gameObjAry.push(gameObj);
                     this._curCacheObjNum++;
                 }
+                /*刚存进 不能马上被释放*/
                 this._objectFirstPool.set(key, gameObjAry);
             }
             if (this._curCacheObjNum > this.MAX_CACHE_NUM) {
                 this.cleanFirstPool();
             }
+            gameObj.canDispose = true;
         };
         /*清理资源池 清理所有一级缓存* */
         GameObjectPool.prototype.cleanFirstPool = function () {
@@ -125,9 +129,11 @@ var gameObject;
                 }
                 else {
                     for (var j = 0; j < gameObjAry.length; j++) {
-                        objNum += gameObjAry.length;
-                        gameObjAry[j].dispose();
-                        gameObjAry[j] = null;
+                        if (gameObjAry[j].canDispose) {
+                            objNum += gameObjAry.length;
+                            gameObjAry[j].dispose();
+                            gameObjAry[j] = null;
+                        }
                     }
                     gameObjAry.splice(0, gameObjAry.length);
                     gameObjAry = null;

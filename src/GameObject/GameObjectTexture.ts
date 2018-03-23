@@ -16,6 +16,7 @@ module gameObject{
 			super();
             this._render = new Sprite();
             this._render.autoSize = true;
+            this._render.cacheAs = "none";
             this.addChild(this._render);     
 		}
         
@@ -59,9 +60,12 @@ module gameObject{
             }	
             //避免高频DC
             if (this._curTexture == null || (this._curTexture.url != tex.url)){
+                //不知道为什么会报错 先return
+                if(this._render == null)
+                    return;
                 this._render.graphics.drawTexture(tex);
-                this._curTexture = tex;
-                // this._render.pivot(this._render.width/2,this._render.height/2);
+                this._curTexture = tex;      
+                
                 this.pivot(this.width/2,this.height/2);
             }
         }

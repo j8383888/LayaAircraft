@@ -21,22 +21,25 @@ module commonUI{
             
         }
 
-        public onShow():void
-        {     
+        public onShow():void{     
             this.view.closeBtn.clickHandler = laya.utils.Handler.create(this,this.onClick);
 
             this.bgHight = this.view.bg.height;
             this.bgAry = new Array<Image>();
             this.bgAry.push(new Image(),new Image());
             this.creatBg();
-            this.startMoveBg();   
+            this.startMoveBg();
+            this.masterDataInit();
 
             manager.BattleLogicManager.instance.initBattleLogic();
         }
-        
+        /*玩家数据初始化*/
+        private masterDataInit():void{
+            manager.LayerManager.instance.addToLayer(this.view.life,LAYER.POP);
+            this.view.life.text = "生命值:" + master.Master.instance.life;
+        }
 
-        public dispose():void
-        {
+        public dispose():void{
             this.bgAry.forEach(function (element:Sprite){
                 element = null;
             });
@@ -48,29 +51,26 @@ module commonUI{
             super.dispose();
         }
 
-        private startMoveBg()
-        {
+        private startMoveBg(){
             Laya.timer.frameLoop(1,this,this.moveBg);
         }
 
-        private onClick():void
-        {
+        private onClick():void{
+             manager.LayerManager.instance.removeFromLayer(this.view.life,LAYER.POP);
             manager.BattleLogicManager.instance.uninitBattleLogic();
             UICenter.instance.closeUI(UI.GameScene);
             UICenter.instance.openUI(UI.Main);
             
         }
 
-        private moveBg():void
-        {
-            for(var i:number = 0; i<this.bgAry.length; i++)
-            {
+        private moveBg():void{
+            for(var i:number = 0; i<this.bgAry.length; i++){
                 this.bgAry[i].y += this.BG_MOVE_SPEED;
-                if(this.bgAry[i].y >= this.bgHight)
-                {
+                if(this.bgAry[i].y >= this.bgHight){
                     this.bgAry[i].y = -this.bgHight;
                 }
             }
+            this.view.life.text = "生命值:" + master.Master.instance.life;
         }
 
         private creatBg():void

@@ -2,7 +2,7 @@ class MathUtil
 {
     
     /** 获得一个 范围内的 随机整数 */		
-    public static random(min:number, max:number):number{
+    public static randomToInt(min:number, max:number):number{
         var minInt:number = Math.floor(min);
         var maxInt:number = Math.floor(max);
         return Math.floor(Math.random() * (maxInt - minInt))+ minInt;

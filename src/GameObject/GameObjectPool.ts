@@ -57,6 +57,8 @@ module gameObject{
 		}
 
 		public disposeGameObject(gameObj:gameObject.GameObject):void{
+			/*刚存进 不能马上被释放*/
+			gameObj.canDispose = false;		
 			gameObj.uninitialize();
 			var key:string = gameObj.flagName + "_" + gameObj.typeID + "_" + gameObj.kindID + "_" + gameObj.statusID;		
 			if(gameObj == null){
@@ -101,7 +103,7 @@ module gameObject{
 				this._curCacheObjNum++;
 				this._objectSecondPool.set(key,gameObjAry);
 			}
-			else{
+			else{			
 				if(this._objectFirstPool.indexOf(gameObj) != -1){
 					gameObjAry = this._objectFirstPool.get(key);
 					gameObjAry.push(gameObj)
@@ -111,14 +113,14 @@ module gameObject{
 					gameObjAry = new Array<gameObject.GameObject>();
 					gameObjAry.push(gameObj);
 					this._curCacheObjNum++;				
-				}		
+				}
+				/*刚存进 不能马上被释放*/
 				this._objectFirstPool.set(key,gameObjAry);
 			}
-			
 			if(this._curCacheObjNum > this.MAX_CACHE_NUM){
 				this.cleanFirstPool();
 			}
-
+			gameObj.canDispose = true;
 		}
 
 		/*清理资源池 清理所有一级缓存* */
@@ -136,9 +138,11 @@ module gameObject{
 				}
 				else{
 					for(var j:number = 0; j < gameObjAry.length;j++){
-						objNum += gameObjAry.length;
-						gameObjAry[j].dispose();
-						gameObjAry[j] = null;
+						if(gameObjAry[j].canDispose){
+							objNum += gameObjAry.length;
+							gameObjAry[j].dispose();
+							gameObjAry[j] = null;
+						}
 					}
 					gameObjAry.splice(0,gameObjAry.length);
 					gameObjAry = null;

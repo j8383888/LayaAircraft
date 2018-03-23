@@ -9,7 +9,8 @@ module gameObject{
 		private _orderIndex:number = 0;
 		constructor(){
 			this._objClassDic = new Dictionary();
-			this._objClassDic.set(GameObjectEnum.TEXTURE_FLAG + GameObjectEnum.PANEL,gameObject.Panel);
+			this._objClassDic.set(GameObjectEnum.TEXTURE_FLAG + GameObjectEnum.MASTER_PANEL,gameObject.MasterPanel);
+			this._objClassDic.set(GameObjectEnum.TEXTURE_FLAG + GameObjectEnum.ENEMY_PANEL,gameObject.EnemyPanel);			
 			this._objClassDic.set(GameObjectEnum.TEXTURE_FLAG + GameObjectEnum.STONE,gameObject.Stone);
 			this._objClassDic.set(GameObjectEnum.TEXTURE_FLAG + GameObjectEnum.BULLET,gameObject.Bullet);
 			this._objClassDic.set(GameObjectEnum.ANIMATION_FLAG + GameObjectEnum.BURST,gameObject.Burst);
@@ -39,6 +40,7 @@ module gameObject{
 				if(varsData != null){
 					gameObj.varsData = varsData;
 				}
+				gameObj.teamID = teamID;
 			}	
 			// gameObj.teamID = teamID;
 			gameObj.initialize();

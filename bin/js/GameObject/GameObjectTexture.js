@@ -24,6 +24,7 @@ var gameObject;
             _this._registerOprID = -1;
             _this._render = new Sprite();
             _this._render.autoSize = true;
+            _this._render.cacheAs = "none";
             _this.addChild(_this._render);
             return _this;
         }
@@ -65,9 +66,11 @@ var gameObject;
             }
             //避免高频DC
             if (this._curTexture == null || (this._curTexture.url != tex.url)) {
+                //不知道为什么会报错 先return
+                if (this._render == null)
+                    return;
                 this._render.graphics.drawTexture(tex);
                 this._curTexture = tex;
-                // this._render.pivot(this._render.width/2,this._render.height/2);
                 this.pivot(this.width / 2, this.height / 2);
             }
         };

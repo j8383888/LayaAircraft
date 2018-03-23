@@ -2,7 +2,7 @@ var MathUtil = /** @class */ (function () {
     function MathUtil() {
     }
     /** 获得一个 范围内的 随机整数 */
-    MathUtil.random = function (min, max) {
+    MathUtil.randomToInt = function (min, max) {
         var minInt = Math.floor(min);
         var maxInt = Math.floor(max);
         return Math.floor(Math.random() * (maxInt - minInt)) + minInt;

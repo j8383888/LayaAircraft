@@ -111,6 +111,16 @@ var gameObject;
             enumerable: true,
             configurable: true
         });
+        Object.defineProperty(GameObject.prototype, "canDispose", {
+            get: function () {
+                return this._canDispose;
+            },
+            set: function (value) {
+                this._canDispose = value;
+            },
+            enumerable: true,
+            configurable: true
+        });
         return GameObject;
     }(Sprite));
     gameObject.GameObject = GameObject;

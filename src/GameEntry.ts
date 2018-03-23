@@ -1,13 +1,15 @@
 // 程序入口
-//已知问题 第一次 爆炸位置有偏移
+// 已知问题 第一次 爆炸位置有偏移
 // 快速返回主菜单 进入游戏 有部分子弹异常加速
 class GameEntry{
-
+    
     constructor()
     {
         this.checkPlatform();
 
-        Laya.init(480,800);
+        Laya.init(480,800,Laya.WebGL);
+        
+        // laya.debug.DebugPanel.init();
         Laya.stage.frameRate = "fast";
         Laya.stage.bgColor = ColorUtil.HTML_BLACK;
         Laya.stage.scaleMode = "noscale";

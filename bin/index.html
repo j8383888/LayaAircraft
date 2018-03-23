@@ -19,7 +19,6 @@
 
 <body>
 	<!--以下引用了常用类库，如果不使用，可以删除-->
-
 	<!--核心包，封装了显示对象渲染，事件，时间管理，时间轴动画，缓动，消息交互,socket，本地存储，鼠标触摸，声音，加载，颜色滤镜，位图字体等-->
 	<script type="text/javascript" src="libs/laya.core.js"></script>
 	<!--提供了微信小游戏的适配-->
@@ -42,6 +41,7 @@
 	<!--用户自定义顺序文件添加到这里-->
 	<!--jsfile--Custom-->
 	<script src="js/GameObject/GameObject.js"></script>
+	<script type="text/javascript" src="libs/laya.debugtool.js"></script>
 	<!--jsfile--Custom-->
 	<!--自定义的js(src文件夹下)文件自动添加到下面jsfile模块标签里面里-->
 	<!--删除标签，ide不会自动添加js文件，请谨慎操作-->
@@ -61,11 +61,13 @@
 	<script src="js/MVC/core/BaseUIData.js"></script>
 	<script src="js/MVC/core/BaseUIControl.js"></script>
 	<script src="js/MVC/core/BaseUICenter.js"></script>
+	<script src="js/Master/MasterLocalStorageData.js"></script>
 	<script src="js/Master/Master.js"></script>
 	<script src="js/Manager/OperationManager.js"></script>
 	<script src="js/Manager/ModuleManager.js"></script>
 	<script src="js/Manager/LayerManager.js"></script>
 	<script src="js/Manager/BulletManager.js"></script>
+	<script src="js/Manager/BattleLogicManager.js"></script>
 	<script src="js/Manager/AtlasLoadManager.js"></script>
 	<script src="js/Manager/AnimationManager.js"></script>
 	<script src="js/GameObject/Stone.js"></script>
@@ -82,6 +84,8 @@
 	<script src="js/GameObject/GameObjectAnimation.js"></script>
 	<script src="js/GameObject/Burst.js"></script>
 	<script src="js/GameObject/Panel.js"></script>
+	<script src="js/GameObject/EnemyPanel.js"></script>
+	<script src="js/GameObject/MasterPanel.js"></script>
 	<script src="js/GameScene/GameSceneControl.js"></script>
 	<script src="js/GameScene/GameSceneManager.js"></script>
 	<script src="js/ui/layaUI.max.all.js"></script>
@@ -89,9 +93,10 @@
 	<script src="js/Main/MainControl.js"></script>
 	<script src="js/Main/MainManager.js"></script>
 	<script src="js/Main/MainView.js"></script>
-	<script src="js/Manager/BattleLogicManager.js"></script>
+	<script src="js/Manager/EventManager.js"></script>
 	<script src="js/MVC/core/UICenter.js"></script>
 	<script src="js/Operation/BulletOperation/BulletOperation.js"></script>
+	<script src="js/Operation/BulletOperation/BulletOperationCircle.js"></script>
 	<script src="js/Operation/BulletOperation/BulletOperationX.js"></script>
 	<script src="js/Operation/EnemyPanelOperation.js"></script>
 	<script src="js/Operation/FiendPanelOperation.js"></script>

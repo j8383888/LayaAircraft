@@ -5,11 +5,13 @@ module ui.GameScene {
     export class GameSceneUI extends View {
 		public bg:Laya.Image;
 		public closeBtn:Laya.Button;
+		public life:laya.display.Text;
 
-        public static  uiView:any ={"type":"View","props":{"width":480,"height":800},"child":[{"type":"Image","props":{"y":0,"x":0,"var":"bg","skin":"GameScene/img_systemimg.png"}},{"type":"Button","props":{"y":7,"x":446,"var":"closeBtn","skin":"comp/btn_close.png","rotation":0}}]};
+        public static  uiView:any ={"type":"View","props":{"width":480,"height":800},"child":[{"type":"Image","props":{"y":0,"x":0,"var":"bg","skin":"GameScene/img_systemimg.png"}},{"type":"Button","props":{"y":7,"x":446,"var":"closeBtn","skin":"comp/btn_close.png","rotation":0}},{"type":"Text","props":{"y":9,"x":216,"width":77,"var":"life","text":"415646","height":29,"fontSize":20,"font":"Arial","color":"#ffffff"}}]};
         constructor(){ super()}
         createChildren():void {
-        
+        			View.regComponent("Text",laya.display.Text);
+
             super.createChildren();
             this.createView(ui.GameScene.GameSceneUI.uiView);
 

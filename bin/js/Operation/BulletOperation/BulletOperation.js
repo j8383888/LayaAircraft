@@ -22,37 +22,22 @@ var operation;
             Laya.timer.frameLoop(1, this, this.update);
         };
         BulletOperation.prototype.unregister = function () {
+            Laya.timer.clearAll(this);
             _super.prototype.unregister.call(this);
-            Laya.timer.clear(this, this.update);
         };
         BulletOperation.prototype.update = function () {
             if (UIUtil.inBorder(this._gameObj.x, this._gameObj.y)) {
                 if (this._gameObj.teamID == 0 /* MASTER */) {
-                    this._gameObj.y -= this.BULLET_SPEED;
-                    this.checkHit();
+                    this._gameObj.y -= 5;
                 }
                 else if (this._gameObj.teamID == 1 /* ENEMY */) {
-                    this._gameObj.y += this.BULLET_SPEED;
+                    this._gameObj.y += 5;
                 }
             }
             else {
-                this.destorySelf();
+                Laya.timer.clearAll(this);
+                gameObject.GameObjectFactory.instance.disposeGameObject(this._gameObj);
             }
-        };
-        BulletOperation.prototype.checkHit = function () {
-            var enemys = manager.BattleLogicManager.instance.inViewEnemyPanels;
-            for (var i = 0; i < enemys.values.length; i++) {
-                var enemyPanel = enemys.values[i];
-                if (this._gameObj.getBounds().intersects(enemyPanel.getBounds())) {
-                    manager.BattleLogicManager.instance.dispatchEvent(manager.BattleLogicManager.ENEMY_ON_DESTORY, enemyPanel);
-                    this.destorySelf();
-                    break;
-                }
-            }
-        };
-        BulletOperation.prototype.destorySelf = function () {
-            Laya.timer.clear(this, this.update);
-            gameObject.GameObjectFactory.instance.disposeGameObject(this._gameObj);
         };
         return BulletOperation;
     }(operation.BaseOperation));

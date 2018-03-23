@@ -16,6 +16,8 @@ module gameObject{
 		
 		protected _layerType:number = LAYER.BATTLE;
 		protected _varsData:Object;
+
+		private _canDispose:boolean;
 		/*引用计数*/
 		public refCount:number = 0;
 		
@@ -93,6 +95,14 @@ module gameObject{
 
 		public set teamID(value:number){
 			this._teamID = value
+		}
+
+		public get canDispose():boolean{
+			return this._canDispose;
+		}
+
+		public set canDispose(value:boolean){
+			this._canDispose = value;
 		}
 	}
 }

@@ -18,8 +18,7 @@ module operation{
 			// 	targetX += 1;
 			// 	targetY += 1;
 			// }
-			laya.utils.Tween.to(gameObj,{x:targetX,y:targetY},this.Duration_Time,Laya.Ease.backIn,new laya.utils.Handler(this,this.onTweenComplete),0,true);
-            
+			laya.utils.Tween.to(gameObj,{x:targetX,y:targetY},this.Duration_Time,Laya.Ease.linearNone,new laya.utils.Handler(this,this.onTweenComplete),0,true);          
         }
 
         public unregister():void{

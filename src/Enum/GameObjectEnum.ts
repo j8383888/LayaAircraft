@@ -4,7 +4,8 @@ class GameObjectEnum{
 	public static readonly ANIMATION_FLAG:string = "animation"; 
     /*typeStr类型*/
     public static readonly BULLET:string = "bullet";
-    public static readonly PANEL:string = "panel";
+    public static readonly ENEMY_PANEL:string = "enemyPanel";
+    public static readonly MASTER_PANEL:string = "masterPanel";
     public static readonly STONE:string = "stone";
     public static readonly BURST:string = "burst";
 }
